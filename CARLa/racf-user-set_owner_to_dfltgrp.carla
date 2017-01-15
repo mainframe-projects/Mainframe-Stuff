@@ -1,0 +1,9 @@
+/* Modify as needed */
+alloc type=RACF   active backup
+alloc type=CKRCMD dd=CKRCMD
+
+/* Generate commands to set DLFTGRP as OWNER */
+newlist type=RACF nopage dd=CKRCMD
+  select  class=user segment=base owner<<>>dfltgrp
+  exclude class=user segment=base key=(irrcerta,irrmulti,irrsitec)
+  sortlist “altuser” key(8) “owner(“ | dfltgrp(0) | “)”
